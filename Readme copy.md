@@ -1,5 +1,3 @@
-# DevSecOps
-
 # DevSecOps CI/CD Pipeline Example
 
 # Jenkins Multibranch Pipeline
