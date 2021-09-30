@@ -1,0 +1,37 @@
+#!/usr/bin/groovy
+import groovy.tranform.Field;
+import groovy.apache.commons.lang.StringUtils;
+import groovy.text.GStringTemplateEngine;
+
+Properties([
+    paramters([
+        string(name:'BRANCH_NAME', defaultValue:'develop', description: 'Branch Name')
+    ])
+])
+
+node('Jenkins_node1'){
+    def email = null
+    def config = [:]
+    config['Project Name'] = "MyProject"
+    def Env=""
+    Stage ('Checkout SCM'){
+        try{
+            echo "checkout Project: ${config.projectname} ..."
+            checkout SCM
+        } catch (Execption ex){
+            println ex
+            curentBuild.results = 'FAILURE'
+        }
+        }
+    Stage ('Gathring Build'){
+        if (params.BRANCH_NAME.equals("develop")){
+            Env = 'nonprd'
+            println 'Dev Environment'
+        } else if (params.BRANCH_NAME.equals(master)) {
+            Env = 'prod'
+            println 'Prod Environment'
+        }
+    }
+    
+    }
+}
